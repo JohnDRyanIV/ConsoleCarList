@@ -35,7 +35,7 @@ public class ListItem {
 	}
 	
 	public String returnItemDetails() {
-		return make + " " + model + ": " + year;
+		return year + ": " + make + " " + model;
 	}
 	
 	// Getters-Setters
