@@ -31,6 +31,85 @@ public class StartProgram {
 		lih.deleteItem(toDelete);
 	}
 	
+	private static void editAnItem() {
+		boolean validInput = true;
+		System.out.println("How would you like to search? ");
+		System.out.println("1 - Search by Make");
+		System.out.println("2 - Search by Model");
+		System.out.println("3 - Search by Year");
+		int searchBy = in.nextInt();
+		in.nextLine();
+		List<ListItem> foundItems = null;
+		switch(searchBy) {
+		case 1: 
+			System.out.print("Enter the make: ");
+			String makeName = in.nextLine();
+			foundItems = lih.searchForItemByMake(makeName);
+			break;
+		case 2:
+			System.out.print("Enter the model: ");
+			String modelName = in.nextLine();
+			foundItems = lih.searchForItemByModel(modelName);
+			break;
+		case 3:
+			System.out.print("Enter the year: ");
+			String yearName = in.nextLine();
+			foundItems = lih.searchForItemByYear(yearName);
+			break;
+		default:
+			validInput = false;
+			System.out.print("Invalid input.\n");
+			break;
+		}
+		
+		if(validInput) {
+			
+			if(!foundItems.isEmpty()) {
+				System.out.println("Found Results.");
+				for (ListItem l : foundItems) {
+					System.out.println(l.getId() + " : " + l.toString());
+				}
+				System.out.print("Which ID to edit: ");
+				int idToEdit = in.nextInt();
+				
+				ListItem toEdit = lih.searchForItemById(idToEdit);
+				System.out.println("Retrieved " + toEdit.getMake() + " " + toEdit.getModel() + ", year " + toEdit.getYear());
+				System.out.println("1 - Update Make");
+				System.out.println("2 - Update Model");
+				System.out.println("3 - Update Year");
+				int update = in.nextInt();
+				in.nextLine();
+				
+				switch (update) {
+				case 1:
+					System.out.print("New Make: ");
+					String newMake = in.nextLine();
+					toEdit.setMake(newMake);
+					break;
+				case 2:
+					System.out.print("New Model: ");
+					String newModel = in.nextLine();
+					toEdit.setModel(newModel);
+					break;
+				case 3:
+					System.out.print("New Year: ");
+					String newYear = in.nextLine();
+					toEdit.setYear(newYear);
+					break;
+				default:
+					validInput = false;
+					System.out.println("Invalid input.\n");
+					break;
+				}
+				
+				if(validInput) {
+					lih.updateItem(toEdit);
+				}
+			} else {
+				System.out.println("---- No results found");
+			}
+		}
+	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -55,7 +134,7 @@ public class StartProgram {
 			if (selection == 1) {
 				addAnItem();
 			} else if (selection == 2) {
-				//editAnItem();
+				editAnItem();
 			} else if (selection == 3) {
 				deleteAnItem();
 			} else if (selection == 4) {

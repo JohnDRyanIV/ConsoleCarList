@@ -47,11 +47,19 @@ public class ListItemHelper {
 		em.close();
 	}
 	
+	public void updateItem(ListItem toEdit) {
+		EntityManager em = emfactory.createEntityManager();
+		em.getTransaction().begin();
+		em.merge(toEdit);
+		em.getTransaction().commit();
+		em.close();
+	}
+	
 	public List<ListItem> searchForItemByMake(String makeName){
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
 		TypedQuery<ListItem> typedQuery = em.createQuery("select li from ListItem li where li.make = :selectedMake", ListItem.class);
-		typedQuery.setParameter("selectedItem",  makeName);
+		typedQuery.setParameter("selectedMake",  makeName);
 		List<ListItem> foundItems = typedQuery.getResultList();
 		em.close();
 		return foundItems;
@@ -61,7 +69,7 @@ public class ListItemHelper {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
 		TypedQuery<ListItem> typedQuery = em.createQuery("select li from ListItem li where li.model = :selectedModel", ListItem.class);
-		typedQuery.setParameter("selectedItem",  modelName);
+		typedQuery.setParameter("selectedModel",  modelName);
 		List<ListItem> foundItems = typedQuery.getResultList();
 		em.close();
 		return foundItems;
@@ -71,10 +79,18 @@ public class ListItemHelper {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
 		TypedQuery<ListItem> typedQuery = em.createQuery("select li from ListItem li where li.year = :selectedYear", ListItem.class);
-		typedQuery.setParameter("selectedItem",  yearName);
+		typedQuery.setParameter("selectedYear",  yearName);
 		List<ListItem> foundItems = typedQuery.getResultList();
 		em.close();
 		return foundItems;
+	}
+	
+	public ListItem searchForItemById(int idToEdit) {
+		EntityManager em = emfactory.createEntityManager();
+		em.getTransaction().begin();
+		ListItem found = em.find(ListItem.class,  idToEdit);
+		em.close();
+		return found;
 	}
 	
 	public void cleanUp() {
