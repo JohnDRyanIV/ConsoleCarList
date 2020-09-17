@@ -34,6 +34,10 @@ public class ListItem {
 		this.setYear(year);
 	}
 	
+	public String returnItemDetails() {
+		return make + " " + model + ": " + year;
+	}
+	
 	// Getters-Setters
 	
 	public int getId() {

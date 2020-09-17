@@ -12,6 +12,7 @@ public class ListItemHelper {
 	
 	public void insertItem(ListItem li) {
 		EntityManager em = emfactory.createEntityManager();
+		em.getTransaction().begin();
 		em.persist(li);
 		em.getTransaction().commit();
 		em.close();
@@ -27,7 +28,7 @@ public class ListItemHelper {
 	public void deleteItem(ListItem toDelete) {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
-		TypedQuery<ListItem> typedQuery = em.createQuery("select li from ListItem li where li.make = :selectedMake, li.model = :selectedModel, and li.year = :selectedYear", ListItem.class);
+		TypedQuery<ListItem> typedQuery = em.createQuery("select li from ListItem li where li.make = :selectedMake and li.model = :selectedModel and li.year = :selectedYear", ListItem.class);
 		
 		// Substitute parameter with actual data from the toDelete item
 		typedQuery.setParameter("selectedMake", toDelete.getMake());
@@ -69,7 +70,7 @@ public class ListItemHelper {
 	public List<ListItem> searchForItemByYear(String yearName){
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
-		TypedQuery<ListItem> typedQuery = em.createQuery("select li from ListItem li where liyeare = :selectedYear", ListItem.class);
+		TypedQuery<ListItem> typedQuery = em.createQuery("select li from ListItem li where li.year = :selectedYear", ListItem.class);
 		typedQuery.setParameter("selectedItem",  yearName);
 		List<ListItem> foundItems = typedQuery.getResultList();
 		em.close();
