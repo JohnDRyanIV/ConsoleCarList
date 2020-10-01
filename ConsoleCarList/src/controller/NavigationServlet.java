@@ -29,21 +29,28 @@ public class NavigationServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ListItemHelper dao = new ListItemHelper();
-		String act = request.getParameter("doThisToItem");
-		// redirect to viewAllItems servlet after changes, unless they add or edit item
-		String path = "/viewAllItemsServlet";
+		String act = request.getParameter("doThisToCar");
+		// redirect to viewAllItems servlet after changes, unless they add or edit a car
+		String path = "/viewAllCarsServlet";
 		
 		if(act.equals("delete")) {
 			try {
 				Integer tempId = Integer.parseInt(request.getParameter("id"));
-				ListItem itemToDelete = dao.searchForItemById(tempId);
-				dao.deleteItem(itemToDelete);
+				ListItem carToDelete = dao.searchForItemById(tempId);
+				dao.deleteItem(carToDelete);
 			} catch (NumberFormatException e) {
-				System.out.println("Forgot to select an item");
+				System.out.println("Forgot to select a car");
 			}
 		}
 		else if (act.equals("edit")) {
-			
+			try {
+				Integer tempId = Integer.parseInt(request.getParameter("id"));
+				ListItem carToEdit = dao.searchForItemById(tempId);
+				request.setAttribute("carToEdit", carToEdit);
+				path = "/edit-car.jsp";
+			} catch (NumberFormatException e) {
+				System.out.println("Forgot to select a car");
+			}
 		}
 		else if(act.equals("add")) {
 			path = "/index.html";

@@ -12,14 +12,14 @@ import model.ListItem;
 /**
  * Servlet implementation class AddItemServlet
  */
-@WebServlet("/addItemServlet")
-public class AddItemServlet extends HttpServlet {
+@WebServlet("/addCarServlet")
+public class AddCarServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddItemServlet() {
+    public AddCarServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
