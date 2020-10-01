@@ -8,16 +8,20 @@
 <title>List of cars</title>
 </head>
 <body>
-<table>
-<c:forEach items="${requestScope.allItems}" var="currentitem">
-<tr>
-	<td><input type="radio" name="id" value="${currentitem.id}"></td>
-	<td>${currentitem.make}</td>
-	<td>${currentitem.model}</td>
-	<td>${currentitem.year}</td>
-</tr>
-</c:forEach>
-</table>
-<a href="index">Return to homepage</a>
+<form method = "post" action = "navigationServlet">
+	<table>
+	<c:forEach items="${requestScope.allItems}" var="currentitem">
+	<tr>
+		<td><input type="radio" name="id" value="${currentitem.id}"></td>
+		<td>${currentitem.make}</td>
+		<td>${currentitem.model}</td>
+		<td>${currentitem.year}</td>
+	</tr>
+	</c:forEach>
+	</table>
+<input type = "submit" value = "edit" name = "doThisToItem">
+<input type = "submit" value = "delete" name = "doThisToItem">
+<input type = "submit" value = "add" name = "doThisToItem">
+</form>
 </body>
 </html>
